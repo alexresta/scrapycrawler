@@ -7,7 +7,8 @@ from datetime import date
 class QuotesSpider(scrapy.Spider):
     name = "mathom"
     
-    
+ 
+       
     def start_requests(self):
         urls = [
             'https://mathom.es/es/2507-ofertas?n=90'
@@ -43,20 +44,38 @@ class QuotesSpider(scrapy.Spider):
             
             
             if not producteDB:
-                producteDB['date_created'] = date.today().isoformat()
-                producteDB['status'] = 'NOU'
-                db.insert(producteDB)
+                producte.init_new()
+                
+                db.insert(producte)
             else:
-                if producteDB['stock'] != producte['stock'] or  producteDB['preu'] != producte['preu']:
-                    producte['date_updated'] = date.today().isoformat()
-                    
-                    db.upsert(dict(producte),Cerca.url == producte['url'])
+                producteDB['date_lastseen'] = date.today().isoformat()
 
-                    print ("Changed!")
-            
-                    print (producteDB)
-            
-            #db.upsert(dict(producte),Cerca.nom == producte['nom'])
+                if producteDB['stock'] == 'Agotado' and producte['stock'] == 'En stock':
+                    producteDB['status_stock'] = 'RESTOCK'
+                    producteDB['stock'] = producte['stock']
+                    producteDB['date_updated'] = date.today().isoformat()
+                elif producteDB['stock'] == 'En stock' and producte['stock'] == 'Agotado':
+                    producteDB['status_stock'] = 'ESGOTAT'
+                    producteDB['stock'] = producte['stock']
+                    producteDB['date_updated'] = date.today().isoformat()
+                elif producteDB['status_stock'] == 'NOU':
+                    producteDB['status_stock'] = 'STOCK'
+                    producteDB['date_updated'] = date.today().isoformat()
+                    
+                if producteDB['preu'] >  producte['preu']:
+                    producteDB['status_preu'] = 'REBAIXAT'
+                    producteDB['preu'] = producte['preu']
+                    producteDB['date_updated'] = date.today().isoformat()
+                elif producteDB['preu'] <  producte['preu']:
+                    producteDB['status_preu'] = 'FIPROMO'
+                    producteDB['preu'] = producte['preu']
+                    producteDB['date_updated'] = date.today().isoformat()
+                elif producteDB['preu'] ==  producte['preu'] and producteDB['status_preu'] != "IGUAL":
+                    producteDB['status_preu'] = 'IGUAL'
+                    producteDB['date_updated'] = date.today().isoformat() 
+                    
+                db.upsert(dict(producteDB),Cerca.url == producte['url'])
+                
             #db.upsert(dict(producte),cerca.url == producte['url'])
             #yield producte
  
@@ -67,4 +86,3 @@ class QuotesSpider(scrapy.Spider):
             
             
           #response.xpath("//meta[@name='keywords']/@content")[0].extract()
-

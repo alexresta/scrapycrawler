@@ -7,6 +7,7 @@
 
 import scrapy
 from scrapy.loader.processors import TakeFirst,Compose
+from datetime import date
 
 def trimx(x):
     return x.strip()
@@ -27,8 +28,18 @@ class Producte(scrapy.Item):
     preu = scrapy.Field( output_processor=Compose(TakeFirst(),treu_moneda))
     preu_original = scrapy.Field( output_processor=Compose(TakeFirst(),treu_moneda))
     stock = scrapy.Field( output_processor=Compose(TakeFirst(),trimx))
-    status = scrapy.Field()
+    status_stock = scrapy.Field()
+    status_preu = scrapy.Field()
+    date_lastseen = scrapy.Field(serializer=str)
     date_created = scrapy.Field(serializer=str)
     date_updated = scrapy.Field(serializer=str)
+    
 
+    def test(self):
+        return self['nom']
 
+    def init_new(self):
+        self['date_created'] = date.today().isoformat()
+        self['date_lastseen'] = date.today().isoformat()
+        self['status_stock'] = 'NOU'
+        self['status_preu'] = 'IGUAL'
