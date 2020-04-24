@@ -5,7 +5,6 @@ from tinydb import TinyDB, Query
 from datetime import date
 from scrapy.crawler import CrawlerProcess
 
-
 class MathomOfertes(scrapy.Spider):
     name = "mathom"
     
