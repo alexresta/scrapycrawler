@@ -6,15 +6,20 @@ from datetime import date
 from scrapy.crawler import CrawlerProcess
 from tinydb.storages import JSONStorage
 from tinydb.middlewares import CachingMiddleware
+from scrapy.utils.project import get_project_settings
 
 class MathomCataleg(scrapy.Spider):
     name = "mathomCataleg"
     #db = TinyDB('dbcataleg.json')
-    db = TinyDB('dbcataleg.json', storage=CachingMiddleware(JSONStorage))
+    #db = TinyDB('dbcataleg.json', storage=CachingMiddleware(JSONStorage))
 
- 
+    def start_requests_test(self):
+         urls = [
+            'https://mathom.es/es/3890-caja-basica-y-accesorios'         
+        ]       
        
     def start_requests(self):   
+
         urls = [
             'https://mathom.es/es/244-juegos-de-tablero',
             'https://mathom.es/es/1831-juegos-familiares',
@@ -24,7 +29,7 @@ class MathomCataleg(scrapy.Spider):
             'https://mathom.es/es/2746-juegos-historicos-y-de-guerra',
             'https://mathom.es/es/1794-juegos-de-miniaturas',
             'https://mathom.es/es/3500-juegos-de-importacion',
-            'https://mathom.es/es/242-juegos-de-cartas-coleccionables'
+            'https://mathom.es/es/283-magic-the-gathering'
             
         ]
         for url in urls:
@@ -49,48 +54,7 @@ class MathomCataleg(scrapy.Spider):
             loader.add_css('stock', 'div.availability span::text')
             producte = loader.load_item()
     
-            Cerca = Query()
-            
-            results = self.db.search(Cerca.url == producte['url'])
-            
-            producteDB = results[0] if results else None
-            
-            print("Producte: "+ producte['nom'])
-            
-            if not producteDB:
-                producte.init_new()
-                
-                self.db.insert(producte)
-            else:
-                if producteDB['date_lastseen'] < date.today().isoformat():
-                                
-                    producteDB['date_lastseen'] = date.today().isoformat()
-
-                    if producteDB['stock'] == 'Agotado' and producte['stock'] == 'En stock':
-                        producteDB['status_stock'] = 'RESTOCK'
-                        producteDB['stock'] = producte['stock']
-                        producteDB['date_updated'] = date.today().isoformat()
-                    elif producteDB['stock'] == 'En stock' and producte['stock'] == 'Agotado':
-                        producteDB['status_stock'] = 'ESGOTAT'
-                        producteDB['stock'] = producte['stock']
-                        producteDB['date_updated'] = date.today().isoformat()
-                    elif producteDB['status_stock'] == 'NOU':
-                        producteDB['status_stock'] = 'STOCK'
-                        producteDB['date_updated'] = date.today().isoformat()
-                        
-                    if producteDB['preu'] >  producte['preu']:
-                        producteDB['status_preu'] = 'REBAIXAT'
-                        producteDB['preu'] = producte['preu']
-                        producteDB['date_updated'] = date.today().isoformat()
-                    elif producteDB['preu'] <  producte['preu']:
-                        producteDB['status_preu'] = 'FIPROMO'
-                        producteDB['preu'] = producte['preu']
-                        producteDB['date_updated'] = date.today().isoformat()
-                    elif producteDB['preu'] ==  producte['preu'] and producteDB['status_preu'] != "IGUAL":
-                        producteDB['status_preu'] = 'IGUAL'
-                        producteDB['date_updated'] = date.today().isoformat() 
-                        
-                    self.db.upsert(dict(producteDB),Cerca.url == producte['url'])
+            yield producte
                 
 
         
@@ -99,19 +63,14 @@ class MathomCataleg(scrapy.Spider):
             #print("next!")
             yield response.follow(next_page, self.parse)
             
-        db.storage.flush()    
+  
           #response.xpath("//meta[@name='keywords']/@content")[0].extract()
         
-def revisarfullcatalog(self):
+def revisarfullcatalog():
     print ("fent catàleg...")
     
-    process = CrawlerProcess(settings={
-    'FEED_FORMAT': 'json',
-    'FEED_URI': 'items.json'
-    })
 
-   
+    process = CrawlerProcess(get_project_settings())  
     process.crawl(MathomCataleg)
     process.start() # the script will block here until the crawling is finished
-    db.close()
     

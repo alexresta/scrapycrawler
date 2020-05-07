@@ -43,7 +43,19 @@ def veureofertes():
  
     input("Prem Enter per continuar")
     mainmenu()
- 
+
+def purgarofertesdesaparegudes():
+    Cerca = Query()
+
+    results = dbofertes.remove(Cerca.date_lastseen < date.today().isoformat())
+
+    print("JOCS Esborrats: \n")
+    for producte in results:
+        print(producte)
+    print("----------------\n") 
+    
+    input("Prem Enter per continuar")
+    mainmenu()
  
 def veurecataleg():
     dbcataleg = TinyDB('dbcataleg.json')
@@ -161,6 +173,8 @@ def mainmenu():
       1: Revisar ofertes
       2: Veure ofertes
       3: Treure CSV de ofertes
+      PO: Purgar ofertes caducades
+      
       4: Revisar cataleg complet
       5: Veure cataleg
       6: Treure CSV de cataleg      
@@ -175,6 +189,8 @@ def mainmenu():
         veureofertes()
     elif choice == "3":
         extreureofertesCSV()
+    elif choice == "PO" or choice =="po":
+        purgarofertesdesaparegudes()              
     elif choice == "4":
         mathomfullcatalog()   
     elif choice == "5":
