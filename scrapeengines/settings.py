@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for mathom project
+# Scrapy settings for scrapeengines project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'mathom'
+BOT_NAME = 'scrapeengines'
 
-SPIDER_MODULES = ['mathom.spiders']
-NEWSPIDER_MODULE = 'mathom.spiders'
+SPIDER_MODULES = ['scrapeengines.spiders']
+NEWSPIDER_MODULE = 'scrapeengines.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'mathom (+http://www.yourdomain.com)'
+#USER_AGENT = 'scrapeengines (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -47,13 +47,13 @@ DOWNLOAD_DELAY = 0.25
 # Enable or disable spider middlemiddlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'mathom.middlewares.MathomSpiderMiddleware': 543,
+#    'scrapeengines.middlewares.MathomSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'mathom.middlewares.MathomDownloaderMiddleware': 543,
+#    'scrapeengines.middlewares.MathomDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ DOWNLOAD_DELAY = 0.25
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'mathom.pipelines.DatabasePipeline': 100,
+    'scrapeengines.pipelines.DatabasePipeline': 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

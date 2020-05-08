@@ -7,7 +7,7 @@
 from tinydb.storages import JSONStorage
 from tinydb.middlewares import CachingMiddleware
 from tinydb import TinyDB, Query
-from mathom.items import Producte
+from scrapeengines.items import Producte
 from datetime import date
 
 class MathomPipeline(object):

@@ -2,8 +2,10 @@ from tinydb import TinyDB, Query
 from datetime import date
 import sys
 import os
-from mathom.spiders.mathomofertes import revisarofertes
-from mathom.spiders.mathomcataleg import revisarfullcatalog
+from scrapeengines.spiders.mathomofertes import revisarofertes
+from scrapeengines.spiders.mathomcataleg import revisarfullcatalog
+from scrapeengines.spiders.egdgamesofertes import revisarofertesegdgames
+
 from colorama import Fore, Back, Style, init, deinit
 
 dbofertes = TinyDB('db.json')
@@ -30,7 +32,9 @@ def veureofertes():
          
     results = dbofertes.search(Cerca.date_lastseen < date.today().isoformat())
 
+
     print("JOCS DESAPAREGUTS: \n")
+
     for producte in results:
         print(producte['nom'])
     print("----------------\n")     
@@ -160,8 +164,14 @@ def deleteDB():
     #db.purge()
     input("Prem Enter per continuar")
     mainmenu()
-    
-    
+
+
+def egdgamesofertes():
+    revisarofertesegdgames()
+
+    input("Prem Enter per continuar")
+    mainmenu()
+
 def mainmenu():
     os.system('cls')
     print(Style.RESET_ALL)
@@ -177,7 +187,9 @@ def mainmenu():
       
       4: Revisar cataleg complet
       5: Veure cataleg
-      6: Treure CSV de cataleg      
+      6: Treure CSV de cataleg   
+      
+      7: Revisar ofertes Egdgames  
       K: Delete DB
       Q: Sortir
     
@@ -196,7 +208,9 @@ def mainmenu():
     elif choice == "5":
         veurecataleg()
     elif choice == "6":
-        extreurecatalegCSV()       
+        extreurecatalegCSV()
+    elif choice == "7":
+        egdgamesofertes()
     elif choice == "K" or choice =="k":
         deleteDB()
     elif choice=="Q" or choice=="q":

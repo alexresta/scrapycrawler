@@ -1,5 +1,5 @@
 import scrapy
-from mathom.items import Producte
+from scrapeengines.items import Producte
 from scrapy.loader import ItemLoader
 from tinydb import TinyDB, Query
 from datetime import date
@@ -9,7 +9,7 @@ from tinydb.middlewares import CachingMiddleware
 from scrapy.utils.project import get_project_settings
 
 class MathomCataleg(scrapy.Spider):
-    name = "mathomCataleg"
+    name = "mathom_cataleg"
     #db = TinyDB('dbcataleg.json')
     #db = TinyDB('dbcataleg.json', storage=CachingMiddleware(JSONStorage))
 
