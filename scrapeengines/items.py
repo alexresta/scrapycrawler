@@ -43,3 +43,8 @@ class Producte(scrapy.Item):
         self['date_lastseen'] = date.today().isoformat()
         self['status_stock'] = 'NOU'
         self['status_preu'] = 'IGUAL'
+        if not "preu" in self:
+            self['preu'] = 0
+        if not "stock" in self:
+            self['stock'] = "N/A"
+
