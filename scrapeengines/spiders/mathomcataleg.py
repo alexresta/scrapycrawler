@@ -53,7 +53,9 @@ class MathomCataleg(scrapy.Spider):
             loader.add_css('preu_original', 'span.old-price::text')
             loader.add_css('stock', 'div.availability span::text')
             producte = loader.load_item()
-    
+
+            producte['botiga']='Mathom'
+
             yield producte
                 
 

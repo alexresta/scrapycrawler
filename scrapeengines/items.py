@@ -13,7 +13,10 @@ def trimx(x):
     return x.strip()
 
 def treu_moneda(x):
-    return x.replace(' €', '')
+    replaced =  x.replace(' €', '')
+    replaced =  replaced.replace(' €', '')
+
+    return replaced
 
 
 class MathomItem(scrapy.Item):
@@ -33,7 +36,7 @@ class Producte(scrapy.Item):
     date_lastseen = scrapy.Field(serializer=str)
     date_created = scrapy.Field(serializer=str)
     date_updated = scrapy.Field(serializer=str)
-    
+    botiga = scrapy.Field(serializer=str)
 
     def test(self):
         return self['nom']

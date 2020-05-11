@@ -5,6 +5,7 @@ import os
 from scrapeengines.spiders.mathomofertes import revisarofertes
 from scrapeengines.spiders.mathomcataleg import revisarfullcatalog
 from scrapeengines.spiders.egdgamesofertes import revisarofertesegdgames
+from scrapeengines.spiders.jugamosunacataleg import jugamosunafullcatalog
 
 from colorama import Fore, Back, Style, init, deinit
 
@@ -70,7 +71,7 @@ def veurecataleg():
 
     print("JOCS NOUS: \n")
     for producte in results:
-        print(producte['nom'])
+        print(producte['nom'] + ': ' + producte['preu'] + ' - ' + producte['botiga'] )
         
     print("----------------\n")
 
@@ -78,14 +79,14 @@ def veurecataleg():
 
     print("JOCS REBAIXATS: \n")
     for producte in results:
-        print(producte['nom'])
+        print(producte['nom'] + ': ' + producte['preu'] + ' - ' + producte['botiga'] )
     print("----------------\n")
          
     results = dbcataleg.search(Cerca.date_lastseen < date.today().isoformat())
 
     print("JOCS DESAPAREGUTS: \n")
     for producte in results:
-        print(producte['nom'])
+        print(producte['nom'] + ' - ' + producte['botiga'])
     print("----------------\n")     
      
     results = dbcataleg.search(Cerca.stock != "Agotado")
@@ -100,7 +101,7 @@ def veurecataleg():
 
 def extreureofertesCSV():
 
-    f= open(F"jocsoferta.csv","w")
+    f= open(F"jocsoferta.csv","w", encoding='utf-8')
     f.write("\"Nom\";\"Preu\";\"URL\"" + NEW_LINE)
 
     Cerca = Query()
@@ -109,8 +110,8 @@ def extreureofertesCSV():
 
     for producte in results:
         f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['url']}\"" + NEW_LINE)
-        
-        
+
+    f.close()
     print()
     print("FET!")
     print()
@@ -122,7 +123,7 @@ def extreureofertesCSV():
 def extreurecatalegCSV():
     dbcataleg = TinyDB('dbcataleg.json')
     
-    f= open(F"jocscataleg.csv","w")
+    f= open(F"jocscataleg.csv","w", encoding='utf-8')
     f.write("\"Nom\";\"Preu\";\"URL\";\"STOCK\"" + NEW_LINE)
 
     Cerca = Query()
@@ -142,7 +143,7 @@ def extreurecatalegCSV():
     print()
     print("FET!")
     print()
-
+    f.close()
 
     input("Prem Enter per continuar")
     mainmenu()
@@ -178,7 +179,7 @@ def mainmenu():
     
     print(Fore.WHITE + Back.BLUE)
     print("************MATHOM MENU**************")
-    print(Style.RESET_ALL) 
+    print(Style.RESET_ALL)
     choice = input("""
       1: Revisar ofertes
       2: Veure ofertes
@@ -190,6 +191,8 @@ def mainmenu():
       6: Treure CSV de cataleg   
       
       7: Revisar ofertes Egdgames  
+      8: Revisar ofertes Jugamosuna  
+
       K: Delete DB
       Q: Sortir
     
@@ -211,6 +214,8 @@ def mainmenu():
         extreurecatalegCSV()
     elif choice == "7":
         egdgamesofertes()
+    elif choice == "8":
+        jugamosunafullcatalog()
     elif choice == "K" or choice =="k":
         deleteDB()
     elif choice=="Q" or choice=="q":
