@@ -51,3 +51,9 @@ class Producte(scrapy.Item):
         if not "stock" in self:
             self['stock'] = "N/A"
 
+    def iguals(self, producteDB):
+        if all ([self['preu'] == producteDB['preu'], self['stock'] == producteDB['stock'],  producteDB['date_lastseen'] == date.today().isoformat()]):
+            return True
+        else:
+            return False
+

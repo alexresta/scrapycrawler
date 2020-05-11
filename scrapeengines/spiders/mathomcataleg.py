@@ -15,10 +15,12 @@ class MathomCataleg(scrapy.Spider):
 
     def start_requests_test(self):
          urls = [
-            'https://mathom.es/es/3890-caja-basica-y-accesorios'         
-        ]       
-       
-    def start_requests(self):   
+            'https://mathom.es/es/3890-caja-basica-y-accesorios'
+         ]
+         for url in urls:
+             yield scrapy.Request(url=url, callback=self.parse)
+
+    def start_requests(self):
 
         urls = [
             'https://mathom.es/es/244-juegos-de-tablero',

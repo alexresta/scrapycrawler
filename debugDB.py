@@ -2,6 +2,8 @@ from tinydb import TinyDB, Query
 from datetime import date
 import sys
 import os
+
+from scrapeengines.avisos.Notificacions import Tipus_Notificacio
 from scrapeengines.spiders.mathomcataleg import revisarfullcatalog
 from scrapeengines.spiders.egdgamesofertes import revisarofertesegdgames
 from scrapeengines.spiders.jugamosunacataleg import jugamosunafullcatalog
@@ -10,6 +12,7 @@ from runspiders import *
 from colorama import Fore, Back, Style, init, deinit
 
 dbofertes = TinyDB('db.json')
+
 NEW_LINE = "\n"
 
 def veureofertes():
@@ -59,38 +62,56 @@ def purgarofertesdesaparegudes():
 
  
 def veurecataleg():
+    dbnotificacions = TinyDB('dbavisos.json')
     dbcataleg = TinyDB('dbcataleg.json')
-    
+
     Cerca = Query()
-                
-    results = dbcataleg.search(Cerca.status_stock == "NOU")
+
+    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.NOVETAT)
 
     print("JOCS NOUS: \n")
-    for producte in results:
-        print(producte['nom'] + ': ' + producte['preu'] + ' - ' + producte['botiga'] )
-        
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
+
+
     print("----------------\n")
 
-    results = dbcataleg.search(Cerca.status_preu == "REBAIXAT")
+    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.REBAIXA)
 
     print("JOCS REBAIXATS: \n")
-    for producte in results:
-        print(producte['nom'] + ': ' + producte['preu'] + ' - ' + producte['botiga'] )
+    for notificacio in results:
+        print(notificacio['data'] + ' ' +  notificacio['producte'] + ': de ' + str(notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+
+
     print("----------------\n")
-         
-    results = dbcataleg.search(Cerca.date_lastseen < date.today().isoformat())
 
-    print("JOCS DESAPAREGUTS: \n")
-    for producte in results:
-        print(producte['nom'] + ' - ' + producte['botiga'])
-    print("----------------\n")     
-     
-    results = dbcataleg.search(Cerca.stock != "Agotado")
+    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.ENCAREIX)
 
-     
-    print("TOTAL STOCK / ESGOTATS: " )     
-    print(str(len(results)) + "/" +str(len(dbcataleg.all())))
- 
+    print("JOCS ENCARITS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+
+    print("----------------\n")
+
+    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.ESGOTAT)
+
+    print("JOCS ESGOTATS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
+
+    print("----------------\n")
+
+    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.RESTOCK)
+
+    print("JOCS REESTOCK: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
+
+
+    print("----------------\n")
+
+    dbcataleg.close()
+    dbnotificacions.close()
 
     
 
@@ -166,9 +187,6 @@ def mainmenu():
       5: Veure cataleg
       6: Treure CSV de cataleg   
       
-      7: Revisar ofertes Egdgames  
-      8: Revisar ofertes Jugamosuna  
-
       K: Delete DB
       Q: Sortir
     
@@ -186,13 +204,14 @@ def mainmenu():
     elif choice == "4":
         import subprocess
         subprocess.run(["python", "runspiders.py", "mathomcataleg"])
+        subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
     elif choice == "5":
         veurecataleg()
     elif choice == "6":
         extreurecatalegCSV()
-    elif choice == "7":
+    elif choice == "777":
         egdgamesofertes()
-    elif choice == "8":
+    elif choice == "888":
         import subprocess
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
     elif choice == "K" or choice =="k":

@@ -1,0 +1,211 @@
+{
+    "_default": {
+        "1": {
+            "tipus_notificacio": "ESGOTAT",
+            "preu_anterior": "48,40",
+            "preu_actual": "48,40",
+            "producte": "Silent Victory: U.S. Submarines in the Pacific, 1941-45 (Ingl\u00e9s)",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/silent-victory/43340-silent-victory-us-submarines-in-the-pacific-1941-45-817054010981.html",
+            "data": "2020-05-12"
+        },
+        "2": {
+            "tipus_notificacio": "RESTOCK",
+            "preu_anterior": "14,36",
+            "preu_actual": "14,36",
+            "producte": "\u00a1M\u00eda!",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/mia/39875-mia-8425402271391.html",
+            "data": "2020-05-12"
+        },
+        "3": {
+            "tipus_notificacio": "RESTOCK",
+            "preu_anterior": "8,95",
+            "preu_actual": "8,95",
+            "producte": "La Caza de la Calabaza",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/la-caza-de-la-calabaza/42921-la-caza-de-la-calabaza-5904262001681.html",
+            "data": "2020-05-12"
+        },
+        "4": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "22,46",
+            "preu_actual": "22,46",
+            "producte": "Escape Tales: Sin Memoria",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/escape-tales/43522-escape-tales-sin-memoria-8436572390287.html",
+            "data": "2020-05-12"
+        },
+        "5": {
+            "tipus_notificacio": "RESTOCK",
+            "preu_anterior": "16,16",
+            "preu_actual": "16,16",
+            "producte": "El Tesoro de los Dragones (+ Promo)",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/el-tesoro-de-los-dragones/41209-el-tesoro-de-los-dragones-8425402271469.html",
+            "data": "2020-05-12"
+        },
+        "8": {
+            "tipus_notificacio": "ESGOTAT",
+            "preu_anterior": "11,70",
+            "preu_actual": "11,70",
+            "producte": "Project Z: Mazo de Cartas",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/project-z/37586-project-z-mazo-de-cartas-5060393704157.html",
+            "data": "2020-05-12"
+        },
+        "9": {
+            "tipus_notificacio": "ESGOTAT",
+            "preu_anterior": "26,99",
+            "preu_actual": "26,99",
+            "producte": "Canci\u00f3n de Hielo y Fuego: H\u00e9roes Neutrales I",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/heroes-neutrales/40970-cancion-de-hielo-y-fuego-heroes-neutrales-i-8435407623798.html",
+            "data": "2020-05-12"
+        },
+        "10": {
+            "tipus_notificacio": "ESGOTAT",
+            "preu_anterior": "26,99",
+            "preu_actual": "26,99",
+            "producte": "Canci\u00f3n de Hielo y Fuego: Reclutas Forzosos",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/guardia-de-la-noche/42548-cancion-de-hielo-y-fuego-reclutas-forzosos-8435407625556.html",
+            "data": "2020-05-12"
+        },
+        "11": {
+            "tipus_notificacio": "RESTOCK",
+            "preu_anterior": "17,96",
+            "preu_actual": "17,96",
+            "producte": "Walking in Burano",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/walking-in-burano/43179-walking-in-burano-8425402448977.html",
+            "data": "2020-05-12"
+        },
+        "12": {
+            "tipus_notificacio": "RESTOCK",
+            "preu_anterior": "16,16",
+            "preu_actual": "16,16",
+            "producte": "Piratas al Agua",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/piratas-al-agua/38255-piratas-al-agua-8414606995608.html",
+            "data": "2020-05-12"
+        },
+        "13": {
+            "tipus_notificacio": "ESGOTAT",
+            "preu_anterior": "87,96",
+            "preu_actual": "87,96",
+            "producte": "Las Mansiones de la Locura (2\u00aa Edici\u00f3n)",
+            "botiga": "Mathom",
+            "url": "https://mathom.es/es/las-mansiones-de-la-locura/37167-las-mansiones-de-la-locura-2-edicion-8435407610705.html",
+            "data": "2020-05-12"
+        },
+        "15": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "27,00",
+            "preu_actual": "27,00",
+            "producte": "Blood Bowl The Gouged Eye",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/1174/comprar-blood-bowl-the-gouged-eye-barato.html",
+            "data": "2020-05-12"
+        },
+        "16": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "24,95",
+            "preu_actual": "24,95",
+            "producte": "Star Wars Legi\u00f3n - Soldados rebeldes",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/2418/comprar-star-wars-legion-soldados-rebeldes-barato.html",
+            "data": "2020-05-12"
+        },
+        "17": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "27,00",
+            "preu_actual": "27,00",
+            "producte": "Blood Bowl - Skavenblight Scramblers",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/1144/comprar-blood-blowl-2016-skavenblight-scramblers-barato.html",
+            "data": "2020-05-12"
+        },
+        "18": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "45,50",
+            "preu_actual": "45,50",
+            "producte": "Illusions of Glory (INGLES)",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/2649/comprar-illusions-of-glory-barato.html",
+            "data": "2020-05-12"
+        },
+        "20": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "67,95",
+            "preu_actual": "67,95",
+            "producte": "BATMAN MINIATURE GAMES - THE RIDDLER:...",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/4091/comprar-the-riddler-quizmasters-barato.html",
+            "data": "2020-05-12"
+        },
+        "21": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "25,46",
+            "preu_actual": "25,46",
+            "producte": "BATMAN MINIATURE GAME CLAYFACE (MULTIVERSE)",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/4180/comprar-clayface-multiverse-barato.html",
+            "data": "2020-05-12"
+        },
+        "22": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "22,91",
+            "preu_actual": "22,91",
+            "producte": "Trappist One",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/4347/comprar-trappist-one-barato.html",
+            "data": "2020-05-12"
+        },
+        "23": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "11,01",
+            "preu_actual": "11,01",
+            "producte": "Black Stories Edici\u00f3n Musica Macabra",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/4358/comprar-black-stories-edicion-musica-macabra-barato.html",
+            "data": "2020-05-12"
+        },
+        "24": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "25,46",
+            "preu_actual": "25,46",
+            "producte": "HARRY POTTER MINIATURES ADVENTURE GAMES:...",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/5026/comprar-lord-voldemort-nagini-barato.html",
+            "data": "2020-05-12"
+        },
+        "25": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "29,95",
+            "preu_actual": "29,95",
+            "producte": "Arkham Horror: El juego de cartas -...",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/5835/comprar-arkham-horror-el-juego-de-cartas-campana-los-devoradores-de-suenos-barato.html",
+            "data": "2020-05-12"
+        },
+        "26": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "49,99",
+            "preu_actual": "49,99",
+            "producte": "[Pre-Venta 1T-2020] Harry Potter: Hogwarts...",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/6288/comprar-harry-potter-hogwarts-battle-barato.html",
+            "data": "2020-05-12"
+        },
+        "27": {
+            "tipus_notificacio": "NOVETAT",
+            "preu_anterior": "127,46",
+            "preu_actual": "127,46",
+            "producte": "BATMAN MINIATURE GAME: BACK TO GOTHAM CAJA",
+            "botiga": "JugamosUna",
+            "url": "https://jugamosuna.es/tienda/7296/comprar-batman-miniature-game-back-to-gotham-caja-barato.html",
+            "data": "2020-05-12"
+        }
+    }
+}
