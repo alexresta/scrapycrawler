@@ -2,10 +2,10 @@ from tinydb import TinyDB, Query
 from datetime import date
 import sys
 import os
-from scrapeengines.spiders.mathomofertes import revisarofertes
 from scrapeengines.spiders.mathomcataleg import revisarfullcatalog
 from scrapeengines.spiders.egdgamesofertes import revisarofertesegdgames
 from scrapeengines.spiders.jugamosunacataleg import jugamosunafullcatalog
+from runspiders import *
 
 from colorama import Fore, Back, Style, init, deinit
 
@@ -45,9 +45,7 @@ def veureofertes():
      
     print("TOTAL STOCK / ESGOTATS: " )     
     print(str(len(results)) + "/" +str(len(dbofertes.all())))
- 
-    input("Prem Enter per continuar")
-    mainmenu()
+
 
 def purgarofertesdesaparegudes():
     Cerca = Query()
@@ -58,9 +56,7 @@ def purgarofertesdesaparegudes():
     for producte in results:
         print(producte)
     print("----------------\n") 
-    
-    input("Prem Enter per continuar")
-    mainmenu()
+
  
 def veurecataleg():
     dbcataleg = TinyDB('dbcataleg.json')
@@ -95,8 +91,7 @@ def veurecataleg():
     print("TOTAL STOCK / ESGOTATS: " )     
     print(str(len(results)) + "/" +str(len(dbcataleg.all())))
  
-    input("Prem Enter per continuar")
-    mainmenu()
+
     
 
 def extreureofertesCSV():
@@ -117,9 +112,6 @@ def extreureofertesCSV():
     print()
 
 
-    input("Prem Enter per continuar")
-    mainmenu()
-   
 def extreurecatalegCSV():
     dbcataleg = TinyDB('dbcataleg.json')
     
@@ -145,33 +137,17 @@ def extreurecatalegCSV():
     print()
     f.close()
 
-    input("Prem Enter per continuar")
-    mainmenu()
-    
-def mathomofertes():
-    revisarofertes()
-    
-    input("Prem Enter per continuar")
-    mainmenu()
-  
+
 def mathomfullcatalog():
     revisarfullcatalog()
     
-    input("Prem Enter per continuar")
-    mainmenu()  
-    
+
 def deleteDB():
     print ("deleting!")
     #db.purge()
-    input("Prem Enter per continuar")
-    mainmenu()
-
 
 def egdgamesofertes():
     revisarofertesegdgames()
-
-    input("Prem Enter per continuar")
-    mainmenu()
 
 def mainmenu():
     os.system('cls')
@@ -199,7 +175,8 @@ def mainmenu():
       ?: """)
 
     if choice == "1":
-        mathomofertes()
+        import subprocess
+        subprocess.run(["python", "runspiders.py", "ofertesmathom"])
     elif choice == "2":
         veureofertes()
     elif choice == "3":
@@ -207,7 +184,8 @@ def mainmenu():
     elif choice == "PO" or choice =="po":
         purgarofertesdesaparegudes()              
     elif choice == "4":
-        mathomfullcatalog()   
+        import subprocess
+        subprocess.run(["python", "runspiders.py", "mathomcataleg"])
     elif choice == "5":
         veurecataleg()
     elif choice == "6":
@@ -215,12 +193,12 @@ def mainmenu():
     elif choice == "7":
         egdgamesofertes()
     elif choice == "8":
-        jugamosunafullcatalog()
+        import subprocess
+        subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
     elif choice == "K" or choice =="k":
         deleteDB()
     elif choice=="Q" or choice=="q":
-        deinit()
-        sys.exit
+        return True
     else:
         print()
         print()
@@ -230,11 +208,19 @@ def mainmenu():
         print()
 
         input(F"      Prem {Fore.BLACK + Back.WHITE}RETORN{Style.RESET_ALL} per continuar")
-        mainmenu()
-    
-  
-init()  
-mainmenu()
+
+
+
+init()
+quit = False
+while not quit:
+    quit = mainmenu()
+    if not quit:
+        input("Prem Enter per continuar")
+
+deinit()
+
+
     
    
 

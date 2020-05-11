@@ -85,19 +85,8 @@ class MathomOfertes(scrapy.Spider):
         #PAGINES SEGÜENTS
         for next_page in response.css('a[rel=next]'):
             pass
-            yield response.follow(next_page, self.parse)
+           # yield response.follow(next_page, self.parse)
             
             
           #response.xpath("//meta[@name='keywords']/@content")[0].extract()
         
-def revisarofertes():
-    print ("fent ofertes...")
-    
-    process = CrawlerProcess(settings={
-    'FEED_FORMAT': 'json',
-    'FEED_URI': 'items.json'
-    })
-
-   
-    process.crawl(MathomOfertes)
-    process.start() # the script will block here until the crawling is finished
