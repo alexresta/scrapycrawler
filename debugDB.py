@@ -178,11 +178,7 @@ def mainmenu():
     print("************MATHOM MENU**************")
     print(Style.RESET_ALL)
     choice = input("""
-      1: Revisar ofertes
-      2: Veure ofertes
-      3: Treure CSV de ofertes
-      PO: Purgar ofertes caducades
-      
+  
       4: Revisar cataleg complet
       5: Veure cataleg
       6: Treure CSV de cataleg   
@@ -192,12 +188,12 @@ def mainmenu():
     
       ?: """)
 
-    if choice == "1":
+    if choice == "111":
         import subprocess
         subprocess.run(["python", "runspiders.py", "ofertesmathom"])
-    elif choice == "2":
+    elif choice == "222":
         veureofertes()
-    elif choice == "3":
+    elif choice == "333":
         extreureofertesCSV()
     elif choice == "PO" or choice =="po":
         purgarofertesdesaparegudes()              
