@@ -30,8 +30,6 @@ class EgdgamesOfertes(scrapy.Spider):
             loader = ItemLoader(item=Producte(), selector=producteRAW)
             
             loader.add_css('nom', 'p.product-title a::text')
-            #7
-            # loader.add_css('editorial', '')
             loader.add_css('url', 'p.product-title a::attr(href)')
             loader.add_css('preu', 'span.price ins span.amount::text')
             loader.add_css('preu', 'span.price > span.amount::text')

@@ -15,7 +15,7 @@ class MathomCataleg(scrapy.Spider):
 
     def start_requests_test(self):
          urls = [
-            'https://mathom.es/es/3890-caja-basica-y-accesorios'
+            'https://mathom.es/es'
          ]
          for url in urls:
              yield scrapy.Request(url=url, callback=self.parse)
@@ -53,7 +53,16 @@ class MathomCataleg(scrapy.Spider):
             loader.add_css('url', 'div.pro_second_box a.product-name::attr(href)')
             loader.add_css('preu', 'span.price::text')
             loader.add_css('preu_original', 'span.old-price::text')
-            loader.add_css('stock', 'div.availability span::text')
+
+
+            textstock = producteRAW.css('div.availability span::text').get()
+
+            if textstock.strip() == "Agotado":
+                loader.add_value('stock','Agotado')
+            else:
+                loader.add_value('stock','Disponible')
+
+
             producte = loader.load_item()
 
             producte['botiga']='Mathom'
@@ -64,7 +73,7 @@ class MathomCataleg(scrapy.Spider):
         
         #PAGINES SEGÜENTS
         for next_page in response.css('a.subcategory-name'):
-            #print("next!")
+            #pass
             yield response.follow(next_page, self.parse)
             
   

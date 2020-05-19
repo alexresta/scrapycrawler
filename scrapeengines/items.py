@@ -18,6 +18,12 @@ def treu_moneda(x):
 
     return replaced
 
+def neteja_caracters(x):
+    replaced =  x.replace('&Amp;', '\u0026')
+    replaced =  replaced.replace('\n', '')
+
+    return replaced
+
 
 class MathomItem(scrapy.Item):
     # define the fields for your item here like:
@@ -25,7 +31,7 @@ class MathomItem(scrapy.Item):
     pass
     
 class Producte(scrapy.Item):
-    nom = scrapy.Field( output_processor=TakeFirst())
+    nom = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_caracters,trimx))
     editorial = scrapy.Field( output_processor=TakeFirst())
     url = scrapy.Field( output_processor=TakeFirst())
     preu = scrapy.Field( output_processor=Compose(TakeFirst(),treu_moneda))
@@ -52,6 +58,7 @@ class Producte(scrapy.Item):
             self['stock'] = "N/A"
 
     def iguals(self, producteDB):
+
         if all ([self['preu'] == producteDB['preu'], self['stock'] == producteDB['stock'],  producteDB['date_lastseen'] == date.today().isoformat()]):
             return True
         else:

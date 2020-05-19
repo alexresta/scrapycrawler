@@ -118,14 +118,14 @@ def veurecataleg():
 def extreureofertesCSV():
 
     f= open(F"jocsoferta.csv","w", encoding='utf-8')
-    f.write("\"Nom\";\"Preu\";\"URL\"" + NEW_LINE)
+    f.write("\"Nom\";\"Preu\";\"Preu\";\"Botiga\"" + NEW_LINE)
 
     Cerca = Query()
 
     results = dbofertes.search(Cerca.stock != "Agotado")
 
     for producte in results:
-        f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['url']}\"" + NEW_LINE)
+        f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['botiga']}\";\"{producte['url']}\"" + NEW_LINE)
 
     f.close()
     print()
@@ -137,7 +137,7 @@ def extreurecatalegCSV():
     dbcataleg = TinyDB('dbcataleg.json')
     
     f= open(F"jocscataleg.csv","w", encoding='utf-8')
-    f.write("\"Nom\";\"Preu\";\"URL\";\"STOCK\"" + NEW_LINE)
+    f.write("\"Nom\";\"Preu\";\"Botiga\";\"URL\";\"STOCK\"" + NEW_LINE)
 
     Cerca = Query()
 
@@ -150,7 +150,7 @@ def extreurecatalegCSV():
             producte['preu'] = 0
         if not "stock" in producte: 
             producte['stock'] = "N/A"           
-        f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['url']}\";\"{producte['stock']}\"" + NEW_LINE)
+        f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['botiga']}\";\"{producte['url']}\";\"{producte['stock']}\"" + NEW_LINE)
         
         
     print()
@@ -201,6 +201,8 @@ def mainmenu():
         import subprocess
         subprocess.run(["python", "runspiders.py", "mathomcataleg"])
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
+        subprocess.run(["python", "runspiders.py", "egdgamescataleg"])
+        subprocess.run(["python", "runspiders.py", "zacatruscataleg"])
     elif choice == "5":
         veurecataleg()
     elif choice == "6":

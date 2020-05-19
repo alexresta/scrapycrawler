@@ -8,6 +8,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+LOG_LEVEL = 'INFO'
 
 BOT_NAME = 'scrapeengines'
 
@@ -65,8 +66,14 @@ CONCURRENT_REQUESTS = 16
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'scrapeengines.pipelines.DatabasePipeline': 100,
+    'scrapeengines.pipelines.DatabasePipeline': 100
+    #'scrapeengines.pipelines.MongoDB': 200,
 }
+
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "catalogDB"
+MONGODB_COLLECTION = "catalog"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

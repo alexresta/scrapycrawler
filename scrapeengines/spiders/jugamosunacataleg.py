@@ -44,7 +44,7 @@ class JugamosunaCataleg(scrapy.Spider):
         for producteRAW in response.css('li.product_item'):
             loader = ItemLoader(item=Producte(), selector=producteRAW)
             
-            loader.add_css('nom', 'h3.product-title > a::text')
+            loader.add_css('nom', 'h3.product-title > a::attr(title)')
             loader.add_css('url', 'h3.product-title > a::attr(href)')
             loader.add_css('preu', 'button.product-price-and-shipping > span.price::text')
 
