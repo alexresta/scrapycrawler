@@ -66,6 +66,9 @@ CONCURRENT_REQUESTS = 16
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+    'scrapeengines.pipelines.MongoDB': 200
+}
+ITEM_PIPELINES_TEST = {
     'scrapeengines.pipelines.DatabasePipeline': 100
     #'scrapeengines.pipelines.MongoDB': 200,
 }

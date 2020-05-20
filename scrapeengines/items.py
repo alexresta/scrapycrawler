@@ -12,9 +12,10 @@ from datetime import date
 def trimx(x):
     return x.strip()
 
-def treu_moneda(x):
+def neteja_moneda(x):
     replaced =  x.replace(' €', '')
     replaced =  replaced.replace(' €', '')
+    replaced =  replaced.replace(',', '.')
 
     return replaced
 
@@ -34,8 +35,8 @@ class Producte(scrapy.Item):
     nom = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_caracters,trimx))
     editorial = scrapy.Field( output_processor=TakeFirst())
     url = scrapy.Field( output_processor=TakeFirst())
-    preu = scrapy.Field( output_processor=Compose(TakeFirst(),treu_moneda))
-    preu_original = scrapy.Field( output_processor=Compose(TakeFirst(),treu_moneda))
+    preu = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_moneda))
+    preu_original = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_moneda))
     stock = scrapy.Field( output_processor=Compose(TakeFirst(),trimx))
     status_stock = scrapy.Field()
     status_preu = scrapy.Field()
@@ -43,6 +44,7 @@ class Producte(scrapy.Item):
     date_created = scrapy.Field(serializer=str)
     date_updated = scrapy.Field(serializer=str)
     botiga = scrapy.Field(serializer=str)
+    _id = scrapy.Field(serializer=str)
 
     def test(self):
         return self['nom']
@@ -56,6 +58,7 @@ class Producte(scrapy.Item):
             self['preu'] = 0
         if not "stock" in self:
             self['stock'] = "N/A"
+        self['_id'] = self['url']
 
     def iguals(self, producteDB):
 

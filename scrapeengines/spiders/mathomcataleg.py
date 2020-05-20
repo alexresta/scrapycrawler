@@ -15,7 +15,7 @@ class MathomCataleg(scrapy.Spider):
 
     def start_requests_test(self):
          urls = [
-            'https://mathom.es/es'
+            'https://mathom.es/es/3500-juegos-de-importacion'
          ]
          for url in urls:
              yield scrapy.Request(url=url, callback=self.parse)
@@ -57,7 +57,7 @@ class MathomCataleg(scrapy.Spider):
 
             textstock = producteRAW.css('div.availability span::text').get()
 
-            if textstock.strip() == "Agotado":
+            if textstock is not None and textstock.strip() == "Agotado":
                 loader.add_value('stock','Agotado')
             else:
                 loader.add_value('stock','Disponible')

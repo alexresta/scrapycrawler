@@ -3,10 +3,9 @@ from datetime import date
 import sys
 import os
 
+import runspiders
 from scrapeengines.avisos.Notificacions import Tipus_Notificacio
-from scrapeengines.spiders.mathomcataleg import revisarfullcatalog
-from scrapeengines.spiders.egdgamesofertes import revisarofertesegdgames
-from scrapeengines.spiders.jugamosunacataleg import jugamosunafullcatalog
+
 from runspiders import *
 
 from colorama import Fore, Back, Style, init, deinit
@@ -159,16 +158,10 @@ def extreurecatalegCSV():
     f.close()
 
 
-def mathomfullcatalog():
-    revisarfullcatalog()
-    
-
 def deleteDB():
     print ("deleting!")
     #db.purge()
 
-def egdgamesofertes():
-    revisarofertesegdgames()
 
 def mainmenu():
     os.system('cls')
@@ -188,27 +181,29 @@ def mainmenu():
     
       ?: """)
 
-    if choice == "111":
-        import subprocess
-        subprocess.run(["python", "runspiders.py", "ofertesmathom"])
-    elif choice == "222":
+    if choice == "222":
         veureofertes()
     elif choice == "333":
         extreureofertesCSV()
     elif choice == "PO" or choice =="po":
-        purgarofertesdesaparegudes()              
+        purgarofertesdesaparegudes()
     elif choice == "4":
+        allparallel()
+    elif choice == "44":
         import subprocess
+        start_time = time.time()
+
         subprocess.run(["python", "runspiders.py", "mathomcataleg"])
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
         subprocess.run(["python", "runspiders.py", "egdgamescataleg"])
         subprocess.run(["python", "runspiders.py", "zacatruscataleg"])
+        print("--- TOTAL TIME: %s seconds ---" % (time.time() - start_time))
+
     elif choice == "5":
         veurecataleg()
     elif choice == "6":
         extreurecatalegCSV()
-    elif choice == "777":
-        egdgamesofertes()
+
     elif choice == "888":
         import subprocess
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])

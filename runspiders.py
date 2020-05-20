@@ -1,10 +1,10 @@
 import sys
+import time
 
 from multiprocessing import Process
 from scrapy.crawler import CrawlerProcess
 
 from scrapeengines.spiders.egdgamescataleg import EgdgamesCataleg
-from scrapeengines.spiders.mathomofertes import MathomOfertes
 from scrapy.utils.project import get_project_settings
 from scrapeengines.spiders.mathomcataleg import MathomCataleg
 from scrapeengines.spiders.jugamosunacataleg import JugamosunaCataleg
@@ -45,6 +45,13 @@ def zacatrusfullcatalog():
     process.crawl(ZacatrusCataleg)
     process.start()  # the script will block here until the crawling is finished
 
+def allparallel():
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(MathomCataleg)
+    process.crawl(JugamosunaCataleg)
+    process.crawl(EgdgamesCataleg)
+    process.crawl(ZacatrusCataleg)
+    process.start()
 
 if __name__ == "__main__":
     if sys.argv[1] == 'mathomcataleg':
