@@ -58,6 +58,7 @@ def allparallel():
     process.crawl(JugamosunaCataleg)
     process.crawl(EgdgamesCataleg)
     process.crawl(ZacatrusCataleg)
+    process.crawl(DracotiendaCataleg)
     process.start()
 
 if __name__ == "__main__":
