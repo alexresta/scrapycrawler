@@ -56,6 +56,8 @@ class Producte(scrapy.Item):
         self['status_preu'] = 'IGUAL'
         if not "preu" in self:
             self['preu'] = 0
+        else:
+            self['preu'] = float(self['preu'])
         if not "stock" in self:
             self['stock'] = "N/A"
         self['_id'] = self['url']
