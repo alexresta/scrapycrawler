@@ -151,8 +151,11 @@ def deleteDBAvisos():
     choice = input("Segur? (S/N)")
 
     if choice == "S":
-        os.remove("dbavisos.json")
-        print("esborrat!")
+        try:
+            os.remove("dbavisos.json")
+            print("esborrat!")
+        except:
+            print("No trobat")
 
 
 def mainmenu():
