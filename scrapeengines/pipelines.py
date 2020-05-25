@@ -198,7 +198,7 @@ class MongoDB(object):
                     producteDB['status_preu'] = 'IGUAL'
                     producteDB['date_updated'] = date.today().isoformat()
 
-                self.db.update({'_id': producte['url']},dict(producte),upsert=True)
+                self.db.update({'_id': producte['url']},dict(producteDB),upsert=True)
 
 
         return producte
