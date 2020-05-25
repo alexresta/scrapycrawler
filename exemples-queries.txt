@@ -1,0 +1,16 @@
+//Cerca per regex, potser no cal usar si  hi ha index de text
+{nom : {$regex : ".*ociedades.*"}}
+
+//Cerca per registres que els manquin un camp
+{date_lastseen :{ $exists: false }}
+
+
+//Cerca per text, busca les 2 i puntua (cal treure SCORE, en tal cas)
+{ $text: { $search: "sociedades tensión" } }
+
+//AND ex1
+{ $and: [{ $text: { $search: "tensión sociedades" } }, {botiga : "Zacatrus"}]}
+
+//AND ex2
+{ $and: [{status_preu:"REBAIXAT"}, {stock : "Disponible"}]}
+
