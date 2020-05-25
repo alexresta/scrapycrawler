@@ -146,9 +146,13 @@ def extreurecatalegCSV():
     f.close()
 
 
-def deleteDB():
-    print ("deleting!")
-    #db.purge()
+def deleteDBAvisos():
+
+    choice = input("Segur? (S/N)")
+
+    if choice == "S":
+        os.remove("dbavisos.json")
+        print("esborrat!")
 
 
 def mainmenu():
@@ -165,7 +169,7 @@ def mainmenu():
       6: Treure CSV de cataleg   
       
       DBI: crear índex DB
-      K: Delete DB
+      DAV: Esborrar avisos de canvis
       Q: Sortir
     
       ?: """)
@@ -196,8 +200,8 @@ def mainmenu():
     elif choice == "888":
         import subprocess
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
-    elif choice == "K" or choice =="k":
-        deleteDB()
+    elif choice == "DAV":
+        deleteDBAvisos()
     elif choice=="Q" or choice=="q":
         return True
     else:
