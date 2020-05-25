@@ -14,3 +14,5 @@
 //AND ex2
 { $and: [{status_preu:"REBAIXAT"}, {stock : "Disponible"}]}
 
+//Tipus string:
+{ preu: { $type: 2 } }

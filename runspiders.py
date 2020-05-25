@@ -7,6 +7,7 @@ from scrapy.utils.project import get_project_settings
 
 from scrapeengines.spiders.dracotiendacataleg import DracotiendaCataleg
 from scrapeengines.spiders.egdgamescataleg import EgdgamesCataleg
+from scrapeengines.spiders.jugamosotracataleg import JugamosotraCataleg
 from scrapeengines.spiders.mathomcataleg import MathomCataleg
 from scrapeengines.spiders.jugamosunacataleg import JugamosunaCataleg
 from scrapeengines.spiders.zacatruscataleg import ZacatrusCataleg
@@ -52,6 +53,12 @@ def dracotiendafullcatalog():
     process.crawl(DracotiendaCataleg)
     process.start()  # the script will block here until the crawling is finished
 
+def jugamosotrafullcatalog():
+
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(JugamosotraCataleg)
+    process.start()  # the script will block here until the crawling is finished
+
 def allparallel():
     process = CrawlerProcess(get_project_settings())
     process.crawl(MathomCataleg)
@@ -59,6 +66,7 @@ def allparallel():
     process.crawl(EgdgamesCataleg)
     process.crawl(ZacatrusCataleg)
     process.crawl(DracotiendaCataleg)
+    process.crawl(JugamosotraCataleg)
     process.start()
 
 if __name__ == "__main__":
@@ -72,5 +80,7 @@ if __name__ == "__main__":
         zacatrusfullcatalog()
     elif sys.argv[1] == 'dracotiendacataleg':
         dracotiendafullcatalog()
+    elif sys.argv[1] == 'jugamosotracataleg':
+        jugamosotrafullcatalog()
     else:
         print("not found")
