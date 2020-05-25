@@ -1,3 +1,4 @@
+import pymongo
 from tinydb import TinyDB, Query
 from datetime import date
 import sys
@@ -10,44 +11,31 @@ from runspiders import *
 
 from colorama import Fore, Back, Style, init, deinit
 
+from scrapeengines.pipelines import MongoDB
+import scrapeengines.settings
+
+
 dbofertes = TinyDB('db.json')
 
 NEW_LINE = "\n"
 
-def veureofertes():
+def indexDB():
+    settings = get_project_settings()
 
-    Cerca = Query()
-                
-    results = dbofertes.search(Cerca.status_stock == "NOU")
+    mongo_server = settings.get('MONGODB_SERVER')
+    mongo_db = settings.get('MONGODB_DB')
+    mongo_port = settings.get('MONGODB_PORT')
+    mongo_collection = settings.get('MONGODB_COLLECTION')
 
-    print("JOCS NOUS: \n")
-    for producte in results:
-        print(producte['nom'])
-        
-    print("----------------\n")
+    mongoclient = pymongo.MongoClient(
+            mongo_server,
+            mongo_port
+        )
+    db = mongoclient.get_database(mongo_db).get_collection(mongo_collection)
 
-    results = dbofertes.search(Cerca.status_preu == "REBAIXAT")
+    db.create_index([('nom', pymongo.TEXT)])
 
-    print("JOCS REBAIXATS: \n")
-    for producte in results:
-        print(producte['nom'])
-    print("----------------\n")
-         
-    results = dbofertes.search(Cerca.date_lastseen < date.today().isoformat())
-
-
-    print("JOCS DESAPAREGUTS: \n")
-
-    for producte in results:
-        print(producte['nom'])
-    print("----------------\n")     
-     
-    results = dbofertes.search(Cerca.stock != "Agotado")
-
-     
-    print("TOTAL STOCK / ESGOTATS: " )     
-    print(str(len(results)) + "/" +str(len(dbofertes.all())))
-
+    pass
 
 def purgarofertesdesaparegudes():
     Cerca = Query()
@@ -176,13 +164,14 @@ def mainmenu():
       5: Veure cataleg
       6: Treure CSV de cataleg   
       
+      DBI: crear índex DB
       K: Delete DB
       Q: Sortir
     
       ?: """)
 
-    if choice == "222":
-        veureofertes()
+    if choice == "DBI":
+        indexDB()
     elif choice == "333":
         extreureofertesCSV()
     elif choice == "PO" or choice =="po":
