@@ -48,5 +48,5 @@ class NotificacioService:
             preu_antic = producteBD['preu']
 
         notificacio = Notificacio(tipus_notificacio, preu_antic, producte)
-
+        return notificacio
         self.dbavisos.insert(notificacio.__dict__)

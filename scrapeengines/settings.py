@@ -77,6 +77,7 @@ MONGODB_SERVER = "localhost"
 MONGODB_PORT = 27017
 MONGODB_DB = "catalogDB"
 MONGODB_COLLECTION = "catalog"
+MONGODB_COLLECTION_AVISOS = "avisos"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

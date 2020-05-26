@@ -23,11 +23,13 @@ class MathomPipeline(object):
 
 class MongoDB(object):
 
-    def __init__(self, mongo_server, mongo_db,mongo_port,mongo_collection):
+    def __init__(self, mongo_server, mongo_db,mongo_port,mongo_collection,mongo_collection_avisos):
         self.mongo_server = mongo_server
         self.mongo_db = mongo_db
         self.mongo_port = mongo_port
         self.mongo_collection = mongo_collection
+        self.mongo_collection_avisos = mongo_collection_avisos
+
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -36,7 +38,8 @@ class MongoDB(object):
             mongo_server=crawler.settings.get('MONGODB_SERVER'),
             mongo_db=crawler.settings.get('MONGODB_DB'),
             mongo_port=crawler.settings.get('MONGODB_PORT'),
-            mongo_collection=crawler.settings.get('MONGODB_COLLECTION')
+            mongo_collection=crawler.settings.get('MONGODB_COLLECTION'),
+            mongo_collection_avisos = crawler.settings.get('MONGODB_COLLECTION_AVISOS')
         )
     def open_spider(self, spider):
         self.mongoclient = pymongo.MongoClient(
@@ -44,11 +47,8 @@ class MongoDB(object):
             self.mongo_port
         )
         self.db = self.mongoclient.get_database(self.mongo_db).get_collection(self.mongo_collection)
-
-        print("OPEN MONGO!")
+        self.dbavisos = self.mongoclient.get_database(self.mongo_db).get_collection(self.mongo_collection_avisos)
         self.avisosService = NotificacioService()
-        self.avisosService.dbopen()
-
 
 
     def process_item(self, producte, spider):
@@ -66,8 +66,10 @@ class MongoDB(object):
         if not producteDB:
             producte.init_new()
             #producte["_id"] = producte["url"]
-            self.avisosService.nova_notificacio(Tipus_Notificacio.NOVETAT, producteDB, producte)
             self.db.insert(dict(producte))
+            notificacio = self.avisosService.nova_notificacio(Tipus_Notificacio.NOVETAT, producteDB, producte)
+            self.dbavisos.insert(dict(notificacio.__dict__))
+
         else:
             if not "date_lastseen" in producteDB:
                 producteDB['date_lastseen'] = '2000-01-01'
@@ -85,29 +87,32 @@ class MongoDB(object):
                 producteDB['date_lastseen'] = date.today().isoformat()
 
                 if producteDB['stock'] == 'Agotado' and producte['stock'] == 'Disponible':
-                    self.avisosService.nova_notificacio(Tipus_Notificacio.RESTOCK, producteDB, producte)
+                    notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.RESTOCK, producteDB, producte)
+                    self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_stock'] = 'RESTOCK'
                     producteDB['stock'] = producte['stock']
                     producteDB['date_updated'] = date.today().isoformat()
                 elif producteDB['stock'] == 'Disponible' and producte['stock'] == 'Agotado':
-                    self.avisosService.nova_notificacio(Tipus_Notificacio.ESGOTAT, producteDB, producte)
+                    notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.ESGOTAT, producteDB, producte)
+                    self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_stock'] = 'ESGOTAT'
                     producteDB['stock'] = producte['stock']
                     producteDB['date_updated'] = date.today().isoformat()
                 elif producteDB['status_stock'] == 'NOU':
-                    self.avisosService.nova_notificacio(Tipus_Notificacio.NOVETAT, producteDB, producte)
+                    notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.NOVETAT, producteDB, producte)
+                    self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_stock'] = 'STOCK'
                     producteDB['date_updated'] = date.today().isoformat()
 
                 if float(producteDB['preu']) > float(producte['preu']):
-                    self.avisosService.nova_notificacio(Tipus_Notificacio.REBAIXA, producteDB, producte)
-
+                    notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.REBAIXA, producteDB, producte)
+                    self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_preu'] = 'REBAIXAT'
                     producteDB['preu'] = float(producte['preu'])
                     producteDB['date_updated'] = date.today().isoformat()
                 elif float(producteDB['preu']) < float(producte['preu']):
-                    self.avisosService.nova_notificacio(Tipus_Notificacio.ENCAREIX, producteDB, producte)
-
+                    notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.ENCAREIX, producteDB, producte)
+                    self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_preu'] = 'FIPROMO'
                     producteDB['preu'] = float(producte['preu'])
                     producteDB['date_updated'] = date.today().isoformat()
@@ -122,4 +127,3 @@ class MongoDB(object):
 
     def close_spider(self, spider):
         self.mongoclient.close()
-        self.avisosService.dbclose()

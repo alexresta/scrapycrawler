@@ -57,7 +57,8 @@ class EgdgamesCataleg(scrapy.Spider):
 
             producte['botiga']='Egdgames'
 
-            yield producte
+            if producte['nom'] != "Blue Max":
+                yield producte
                 
 
         

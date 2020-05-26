@@ -19,6 +19,8 @@ dbofertes = TinyDB('db.json')
 
 NEW_LINE = "\n"
 
+
+
 def indexDB():
     settings = get_project_settings()
 
@@ -34,20 +36,10 @@ def indexDB():
     db = mongoclient.get_database(mongo_db).get_collection(mongo_collection)
 
     db.create_index([('nom', pymongo.TEXT)])
-
+    mongoclient.close()
     pass
 
-def purgarofertesdesaparegudes():
-    Cerca = Query()
 
-    results = dbofertes.remove(Cerca.date_lastseen < date.today().isoformat())
-
-    print("JOCS Esborrats: \n")
-    for producte in results:
-        print(producte)
-    print("----------------\n") 
-
- 
 def veurecataleg():
     dbnotificacions = TinyDB('dbavisos.json')
     dbcataleg = TinyDB('dbcataleg.json')
@@ -100,7 +92,71 @@ def veurecataleg():
     dbcataleg.close()
     dbnotificacions.close()
 
-    
+
+def veureavisos():
+
+    settings = get_project_settings()
+
+    mongo_server = settings.get('MONGODB_SERVER')
+    mongo_db = settings.get('MONGODB_DB')
+    mongo_port = settings.get('MONGODB_PORT')
+    mongo_collection_avisos = settings.get('MONGODB_COLLECTION_AVISOS')
+
+    mongoclient = pymongo.MongoClient(
+        mongo_server,
+        mongo_port
+    )
+    db = mongoclient.get_database(mongo_db).get_collection(mongo_collection_avisos)
+
+    results = db.find( { "tipus_notificacio" : "NOVETAT" })
+
+
+    print("JOCS NOUS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+              notificacio['botiga'])
+
+    print("----------------\n")
+
+    results = db.find( { "tipus_notificacio" : "REBAIXA" })
+
+    print("JOCS REBAIXATS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(
+            notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+
+    print("----------------\n")
+
+    results = db.find( { "tipus_notificacio" : "ENCAREIX" })
+
+    print("JOCS ENCARITS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(
+            notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+
+    print("----------------\n")
+
+    results = db.find( { "tipus_notificacio" : "ESGOTAT" })
+
+    print("JOCS ESGOTATS: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+              notificacio['botiga'])
+
+    print("----------------\n")
+
+    results = db.find( { "tipus_notificacio" : "RESTOCK" })
+
+    print("JOCS REESTOCK: \n")
+    for notificacio in results:
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+              notificacio['botiga'])
+
+    print("----------------\n")
+
+
+    mongoclient.close()
+
 
 def extreureofertesCSV():
 
@@ -151,11 +207,26 @@ def deleteDBAvisos():
     choice = input("Segur? (S/N)")
 
     if choice == "S":
-        try:
-            os.remove("dbavisos.json")
-            print("esborrat!")
-        except:
-            print("No trobat")
+        settings = get_project_settings()
+
+        mongo_server = settings.get('MONGODB_SERVER')
+        mongo_db = settings.get('MONGODB_DB')
+        mongo_port = settings.get('MONGODB_PORT')
+        mongo_collection_avisos = settings.get('MONGODB_COLLECTION_AVISOS')
+
+        mongoclient = pymongo.MongoClient(
+            mongo_server,
+            mongo_port
+        )
+        db = mongoclient.get_database(mongo_db).get_collection(mongo_collection_avisos)
+
+        db.delete_many({})
+
+        print("esborrat!")
+        mongoclient.close()
+
+
+
 
 
 def mainmenu():
@@ -196,7 +267,7 @@ def mainmenu():
         print("--- TOTAL TIME: %s seconds ---" % (time.time() - start_time))
 
     elif choice == "5":
-        veurecataleg()
+        veureavisos()
     elif choice == "6":
         extreurecatalegCSV()
 
