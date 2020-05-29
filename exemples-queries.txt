@@ -16,3 +16,6 @@
 
 //Tipus string:
 { preu: { $type: 2 } }
+
+
+{ $and: [{url : {$regex : ".*outlet.pc.*"}}, {botiga : "Zacatrus"}]}

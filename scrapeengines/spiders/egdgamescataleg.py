@@ -21,14 +21,19 @@ class EgdgamesCataleg(scrapy.Spider):
     def start_requests(self):
 
         urls = [
-            'https://www.egdgames.com/comprar/juegos-de-mesa/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/100/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/80/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/60/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/40/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/20/',
+            'https://www.egdgames.com/comprar/juegos-de-mesa',
             'https://www.egdgames.com/comprar/juegos-de-importacion/',
             'https://www.egdgames.com/comprar/juegos-danados-o-desprecintados/',
             'https://www.egdgames.com/comprar/juegos-con-miniaturas/',
             'https://www.egdgames.com/comprar/oferta-semanal/',
             'https://www.egdgames.com/comprar/outlet/',
             'https://www.egdgames.com/comprar/juegos-de-mesa-de-segunda-mano/',
-            'https://www.egdgames.com/comprar/sin-categorizar/page/4/'
+            'https://www.egdgames.com/comprar/sin-categorizar'
             
         ]
         for url in urls:

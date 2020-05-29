@@ -50,6 +50,8 @@ def veurecataleg():
 
     print("JOCS NOUS: \n")
     for notificacio in results:
+        if notificacio['botiga'] == "Mathom":
+            notificacio['preu'] = notificacio['preu']  * 0.95
         print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
 
 
@@ -113,7 +115,9 @@ def veureavisos():
 
     print("JOCS NOUS: \n")
     for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
               notificacio['botiga'])
 
     print("----------------\n")
@@ -122,8 +126,9 @@ def veureavisos():
 
     print("JOCS REBAIXATS: \n")
     for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(
-            notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+        preu_anterior = "{:.2f}".format(float(notificacio['preu_anterior']))
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
 
     print("----------------\n")
 
@@ -131,8 +136,9 @@ def veureavisos():
 
     print("JOCS ENCARITS: \n")
     for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(
-            notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
+        preu_anterior = "{:.2f}".format(float(notificacio['preu_anterior']))
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
 
     print("----------------\n")
 
@@ -140,7 +146,9 @@ def veureavisos():
 
     print("JOCS ESGOTATS: \n")
     for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
               notificacio['botiga'])
 
     print("----------------\n")
@@ -149,31 +157,15 @@ def veureavisos():
 
     print("JOCS REESTOCK: \n")
     for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' +
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
               notificacio['botiga'])
 
     print("----------------\n")
 
 
     mongoclient.close()
-
-
-def extreureofertesCSV():
-
-    f= open(F"jocsoferta.csv","w", encoding='utf-8')
-    f.write("\"Nom\";\"Preu\";\"Preu\";\"Botiga\"" + NEW_LINE)
-
-    Cerca = Query()
-
-    results = dbofertes.search(Cerca.stock != "Agotado")
-
-    for producte in results:
-        f.write(F"\"{producte['nom']}\";\"{producte['preu']}\";\"{producte['botiga']}\";\"{producte['url']}\"" + NEW_LINE)
-
-    f.close()
-    print()
-    print("FET!")
-    print()
 
 
 def extreurecatalegCSV():
@@ -250,10 +242,6 @@ def mainmenu():
 
     if choice == "DBI":
         indexDB()
-    elif choice == "333":
-        extreureofertesCSV()
-    elif choice == "PO" or choice =="po":
-        purgarofertesdesaparegudes()
     elif choice == "4":
         allparallel()
     elif choice == "44":

@@ -26,7 +26,7 @@ class Notificacio:
     def __init__(self, tipus_notificacio, preu_anterior, producte):
         self.tipus_notificacio = tipus_notificacio
         self.preu_anterior = preu_anterior
-        self.preu_actual = producte['preu']
+        self.preu_actual = float(producte['preu'])
         self.producte = producte['nom']
         self.botiga = producte['botiga']
         self.url = producte['url']
@@ -48,5 +48,6 @@ class NotificacioService:
             preu_antic = producteBD['preu']
 
         notificacio = Notificacio(tipus_notificacio, preu_antic, producte)
+
         return notificacio
         self.dbavisos.insert(notificacio.__dict__)
