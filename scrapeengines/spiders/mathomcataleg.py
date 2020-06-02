@@ -66,7 +66,8 @@ class MathomCataleg(scrapy.Spider):
             producte = loader.load_item()
 
             producte['botiga']='Mathom'
-            producte['preu'] = float(producte['preu']) * 0.95
+            if "preu" in producte:
+                producte['preu'] = float(producte['preu']) * 0.95
             yield producte
                 
 
