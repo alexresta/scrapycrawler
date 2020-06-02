@@ -243,7 +243,12 @@ def mainmenu():
     if choice == "DBI":
         indexDB()
     elif choice == "4":
-        allparallel()
+        import subprocess
+        start_time = time.time()
+
+        subprocess.run(["python", "runspiders.py", "allparallel"])
+
+        print("--- TOTAL TIME: %s seconds ---" % (time.time() - start_time))
     elif choice == "44":
         import subprocess
         start_time = time.time()

@@ -93,5 +93,7 @@ if __name__ == "__main__":
         jugamosotrafullcatalog()
     elif sys.argv[1] == 'outletpccataleg':
         outletpcfullcatalog()
+    elif sys.argv[1] == 'allparallel':
+        allparallel()
     else:
         print("not found")
