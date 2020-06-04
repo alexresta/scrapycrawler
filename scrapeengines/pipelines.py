@@ -112,7 +112,7 @@ class MongoDB(object):
                     producteDB['preu'] = float(producte['preu'])
                     producteDB['date_updated'] = date.today().isoformat()
                 elif float(producteDB['preu']) < float(producte['preu']):
-                    if float(producte['preu']) > 0:
+                    if float(producteDB['preu']) > 0:
                         notificacio=self.avisosService.nova_notificacio(Tipus_Notificacio.ENCAREIX, producteDB, producte)
                         self.dbavisos.insert(dict(notificacio.__dict__))
                     producteDB['status_preu'] = 'FIPROMO'

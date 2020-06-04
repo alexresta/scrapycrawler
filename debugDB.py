@@ -110,7 +110,7 @@ def veureavisos():
     )
     db = mongoclient.get_database(mongo_db).get_collection(mongo_collection_avisos)
 
-    results = db.find( { "tipus_notificacio" : "NOVETAT" })
+    results = db.find( { "tipus_notificacio" : "NOVETAT" }).sort("botiga")
 
 
     print("JOCS NOUS: \n")
@@ -122,7 +122,7 @@ def veureavisos():
 
     print("----------------\n")
 
-    results = db.find( { "tipus_notificacio" : "REBAIXA" })
+    results = db.find( { "tipus_notificacio" : "REBAIXA" }).sort("botiga")
 
     print("JOCS REBAIXATS: \n")
     for notificacio in results:
@@ -132,7 +132,19 @@ def veureavisos():
 
     print("----------------\n")
 
-    results = db.find( { "tipus_notificacio" : "ENCAREIX" })
+    results = db.find({"tipus_notificacio": "RESTOCK"}).sort("botiga")
+
+    print("JOCS REESTOCK: \n")
+    for notificacio in results:
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
+              notificacio['botiga'])
+
+    print("----------------\n")
+
+    
+    results = db.find( { "tipus_notificacio" : "ENCAREIX" }).sort("botiga")
 
     print("JOCS ENCARITS: \n")
     for notificacio in results:
@@ -142,7 +154,7 @@ def veureavisos():
 
     print("----------------\n")
 
-    results = db.find( { "tipus_notificacio" : "ESGOTAT" })
+    results = db.find( { "tipus_notificacio" : "ESGOTAT" }).sort("botiga")
 
     print("JOCS ESGOTATS: \n")
     for notificacio in results:
@@ -153,16 +165,7 @@ def veureavisos():
 
     print("----------------\n")
 
-    results = db.find( { "tipus_notificacio" : "RESTOCK" })
 
-    print("JOCS REESTOCK: \n")
-    for notificacio in results:
-        preu = "{:.2f}".format(float(notificacio['preu_actual']))
-
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
-              notificacio['botiga'])
-
-    print("----------------\n")
 
 
     mongoclient.close()
