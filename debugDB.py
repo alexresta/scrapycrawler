@@ -19,6 +19,17 @@ dbofertes = TinyDB('db.json')
 
 NEW_LINE = "\n"
 
+def titol(titol):
+    print("")
+    estiltitol = Fore.WHITE + Back.BLUE
+    fiestils = Style.RESET_ALL
+    print( estiltitol + titol + fiestils)
+
+def titol2(titol):
+    print()
+    estiltitol2 = Fore.BLACK + Back.LIGHTGREEN_EX
+    fiestils = Style.RESET_ALL
+    print( estiltitol2 + titol + fiestils)
 
 
 def indexDB():
@@ -40,60 +51,6 @@ def indexDB():
     pass
 
 
-def veurecataleg():
-    dbnotificacions = TinyDB('dbavisos.json')
-    dbcataleg = TinyDB('dbcataleg.json')
-
-    Cerca = Query()
-
-    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.NOVETAT)
-
-    print("JOCS NOUS: \n")
-    for notificacio in results:
-        if notificacio['botiga'] == "Mathom":
-            notificacio['preu'] = notificacio['preu']  * 0.95
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
-
-
-    print("----------------\n")
-
-    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.REBAIXA)
-
-    print("JOCS REBAIXATS: \n")
-    for notificacio in results:
-        print(notificacio['data'] + ' ' +  notificacio['producte'] + ': de ' + str(notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
-
-
-    print("----------------\n")
-
-    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.ENCAREIX)
-
-    print("JOCS ENCARITS: \n")
-    for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + str(notificacio['preu_anterior']) + ' a ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'])
-
-    print("----------------\n")
-
-    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.ESGOTAT)
-
-    print("JOCS ESGOTATS: \n")
-    for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
-
-    print("----------------\n")
-
-    results = dbnotificacions.search(Cerca.tipus_notificacio == Tipus_Notificacio.RESTOCK)
-
-    print("JOCS REESTOCK: \n")
-    for notificacio in results:
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + str(notificacio['preu_actual']) + ' - ' + notificacio['botiga'] )
-
-
-    print("----------------\n")
-
-    dbcataleg.close()
-    dbnotificacions.close()
-
 
 def veureavisos():
 
@@ -113,30 +70,48 @@ def veureavisos():
     results = db.find( { "tipus_notificacio" : "NOVETAT" }).sort("botiga")
 
 
-    print("JOCS NOUS: \n")
+    titol("JOCS NOUS")
+
+    botiga = ""
     for notificacio in results:
         preu = "{:.2f}".format(float(notificacio['preu_actual']))
 
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
-              notificacio['botiga'])
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu )
 
     print("----------------\n")
 
     results = db.find( { "tipus_notificacio" : "REBAIXA" }).sort("botiga")
 
-    print("JOCS REBAIXATS: \n")
+    titol("JOCS REBAIXATS")
+
+    botiga = ""
     for notificacio in results:
         preu_anterior = "{:.2f}".format(float(notificacio['preu_anterior']))
         preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
+
         print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
 
     print("----------------\n")
 
     results = db.find({"tipus_notificacio": "RESTOCK"}).sort("botiga")
 
-    print("JOCS REESTOCK: \n")
+    titol("JOCS REESTOCK")
+
+    botiga = ""
     for notificacio in results:
         preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
 
         print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
               notificacio['botiga'])
@@ -146,20 +121,31 @@ def veureavisos():
     
     results = db.find( { "tipus_notificacio" : "ENCAREIX" }).sort("botiga")
 
-    print("JOCS ENCARITS: \n")
+    titol("JOCS ENCARITS")
+
+    botiga = ""
     for notificacio in results:
         preu_anterior = "{:.2f}".format(float(notificacio['preu_anterior']))
         preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
         print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
 
     print("----------------\n")
 
     results = db.find( { "tipus_notificacio" : "ESGOTAT" }).sort("botiga")
 
-    print("JOCS ESGOTATS: \n")
+    titol("JOCS ESGOTATS")
+
+    botiga = ""
     for notificacio in results:
         preu = "{:.2f}".format(float(notificacio['preu_actual']))
 
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
         print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
               notificacio['botiga'])
 
