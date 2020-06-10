@@ -80,7 +80,7 @@ def veureavisos():
             botiga = notificacio['botiga']
             titol2(botiga)
 
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu )
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu  + ' ' + notificacio['url'])
 
     print("----------------\n")
 
@@ -97,7 +97,7 @@ def veureavisos():
             botiga = notificacio['botiga']
             titol2(botiga)
 
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' ' + notificacio['url'])
 
     print("----------------\n")
 
@@ -113,8 +113,7 @@ def veureavisos():
             botiga = notificacio['botiga']
             titol2(botiga)
 
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
-              notificacio['botiga'])
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' ' + notificacio['url'])
 
     print("----------------\n")
 
@@ -131,7 +130,7 @@ def veureavisos():
         if botiga != notificacio['botiga']:
             botiga = notificacio['botiga']
             titol2(botiga)
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' - ' + notificacio['botiga'])
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' ' + notificacio['url'])
 
     print("----------------\n")
 
@@ -146,8 +145,7 @@ def veureavisos():
         if botiga != notificacio['botiga']:
             botiga = notificacio['botiga']
             titol2(botiga)
-        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' - ' +
-              notificacio['botiga'])
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu)
 
     print("----------------\n")
 
