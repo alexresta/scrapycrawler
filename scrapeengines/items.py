@@ -9,6 +9,9 @@ import scrapy
 from scrapy.loader.processors import TakeFirst,Compose
 from datetime import date
 
+from w3lib.html import remove_tags
+
+
 def trimx(x):
     return x.strip()
 
@@ -35,8 +38,8 @@ class Producte(scrapy.Item):
     nom = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_caracters,trimx))
     editorial = scrapy.Field( output_processor=TakeFirst())
     url = scrapy.Field( output_processor=TakeFirst())
-    preu = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_moneda))
-    preu_original = scrapy.Field( output_processor=Compose(TakeFirst(),neteja_moneda))
+    preu = scrapy.Field( output_processor=Compose(TakeFirst(),remove_tags,neteja_moneda))
+    preu_original = scrapy.Field( output_processor=Compose(TakeFirst(),remove_tags,neteja_moneda))
     stock = scrapy.Field( output_processor=Compose(TakeFirst(),trimx))
     status_stock = scrapy.Field()
     status_preu = scrapy.Field()
@@ -57,7 +60,8 @@ class Producte(scrapy.Item):
         if not "preu" in self:
             self['preu'] = 0
         else:
-            self['preu'] = float(self['preu'])
+            if self['preu'] != '':
+                self['preu'] = float(self['preu'])
 
         if "preu_original" in self:
             self['preu_original'] = float(self['preu_original'])

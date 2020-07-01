@@ -6,6 +6,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
 from scrapeengines.spiders.dracotiendacataleg import DracotiendaCataleg
+from scrapeengines.spiders.ecicataleg import EciCataleg
 from scrapeengines.spiders.egdgamescataleg import EgdgamesCataleg
 from scrapeengines.spiders.jugamosotracataleg import JugamosotraCataleg
 from scrapeengines.spiders.mathomcataleg import MathomCataleg
@@ -73,6 +74,12 @@ def juguetestodayfullcatalog():
     process.crawl(JuguetestodayCataleg)
     process.start()  # the script will block here until the crawling is finished
 
+def ecifullcatalog():
+
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(EciCataleg)
+    process.start()  # the script will block here until the crawling is finished
+
 
 def allparallel():
     process = CrawlerProcess(get_project_settings())
@@ -84,6 +91,7 @@ def allparallel():
     process.crawl(JugamosotraCataleg)
     process.crawl(OutletpcCataleg)
     process.crawl(JuguetestodayCataleg)
+    process.crawl(EciCataleg)
 
     process.start()
 
@@ -104,6 +112,8 @@ if __name__ == "__main__":
         outletpcfullcatalog()
     elif sys.argv[1] == 'juguetestodaycataleg':
         juguetestodayfullcatalog()
+    elif sys.argv[1] == 'ecicataleg':
+        ecifullcatalog()
     elif sys.argv[1] == 'allparallel':
         allparallel()
     else:
