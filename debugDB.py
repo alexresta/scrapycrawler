@@ -51,8 +51,64 @@ def indexDB():
     pass
 
 
-
 def veureavisos():
+    settings = get_project_settings()
+
+    mongo_server = settings.get('MONGODB_SERVER')
+    mongo_db = settings.get('MONGODB_DB')
+    mongo_port = settings.get('MONGODB_PORT')
+    mongo_collection_avisos = settings.get('MONGODB_COLLECTION_AVISOS')
+
+    mongoclient = pymongo.MongoClient(
+        mongo_server,
+        mongo_port
+    )
+    db = mongoclient.get_database(mongo_db).get_collection(mongo_collection_avisos)
+
+    results = db.find({"tipus_notificacio": "NOVETAT"}).sort("botiga")
+
+    titol("JOCS NOUS")
+
+    botiga = ""
+    for notificacio in results:
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': ' + preu + ' ' + notificacio['url'])
+
+    print("----------------\n")
+
+
+    results = db.find({"tipus_notificacio": "REBAIXA"}).sort("botiga")
+
+    titol("JOCS REBAIXATS")
+
+    botiga = ""
+    for notificacio in results:
+        preu_anterior = "{:.2f}".format(float(notificacio['preu_anterior']))
+        preu = "{:.2f}".format(float(notificacio['preu_actual']))
+
+        if botiga != notificacio['botiga']:
+            botiga = notificacio['botiga']
+            titol2(botiga)
+
+        print(notificacio['data'] + ' ' + notificacio['producte'] + ': de ' + preu_anterior + ' a ' + preu + ' ' +
+              notificacio['url'])
+
+    print("----------------\n")
+
+
+
+
+
+
+    mongoclient.close()
+
+
+def veureavisos_extra():
 
     settings = get_project_settings()
 
