@@ -19,3 +19,6 @@
 
 
 { $and: [{url : {$regex : ".*outlet.pc.*"}}, {botiga : "Zacatrus"}]}
+
+//antics
+ {date_lastseen : {$lt: "2020-07-01"}  }
