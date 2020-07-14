@@ -81,7 +81,8 @@ class MongoDB(object):
                 producte['preu'] = 0
             if not "stock" in producte:
                 producte['stock'] = "N/A"
-
+            if producte['preu'] == '':
+                producte['preu'] = 0
             if not producte.iguals(producteDB):
                 # print ("Un diferent!")
                 producteDB['date_lastseen'] = date.today().isoformat()

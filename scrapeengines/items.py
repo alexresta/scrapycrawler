@@ -62,6 +62,8 @@ class Producte(scrapy.Item):
         else:
             if self['preu'] != '':
                 self['preu'] = float(self['preu'])
+            else:
+                self['preu'] = 0
 
         if "preu_original" in self:
             self['preu_original'] = float(self['preu_original'])
