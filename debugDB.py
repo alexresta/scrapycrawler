@@ -263,6 +263,31 @@ def deleteDBAvisos():
 
 
 
+def esborrarAntics():
+
+    choice = input("Segur? (S/N)")
+
+    if choice == "S":
+        settings = get_project_settings()
+
+        mongo_server = settings.get('MONGODB_SERVER')
+        mongo_db = settings.get('MONGODB_DB')
+        mongo_port = settings.get('MONGODB_PORT')
+        mongo_collection = settings.get('MONGODB_COLLECTION')
+
+        mongoclient = pymongo.MongoClient(
+            mongo_server,
+            mongo_port
+        )
+        db = mongoclient.get_database(mongo_db).get_collection(mongo_collection)
+
+        n = db.delete_many({ "date_lastseen": {"$lt": "2020-07-07"}})
+
+        print("esborrats: " , n.deleted_count)
+        mongoclient.close()
+
+
+
 
 def mainmenu():
     os.system('cls')
@@ -273,9 +298,10 @@ def mainmenu():
     print(Style.RESET_ALL)
     choice = input("""
   
-      4: Revisar cataleg complet
-      5: Veure cataleg
+      1: Revisar cataleg complet
+      2: Veure cataleg
       6: Treure CSV de cataleg   
+      9: Esborrar items antics
       
       DBI: crear índex DB
       DAV: Esborrar avisos de canvis
@@ -285,28 +311,19 @@ def mainmenu():
 
     if choice == "DBI":
         indexDB()
-    elif choice == "4":
+    elif choice == "1":
         import subprocess
         start_time = time.time()
 
         subprocess.run(["python", "runspiders.py", "allparallel"])
 
         print("--- TOTAL TIME: %s seconds ---" % (time.time() - start_time))
-    elif choice == "44":
-        import subprocess
-        start_time = time.time()
-
-        subprocess.run(["python", "runspiders.py", "mathomcataleg"])
-        subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
-        subprocess.run(["python", "runspiders.py", "egdgamescataleg"])
-        subprocess.run(["python", "runspiders.py", "zacatruscataleg"])
-        print("--- TOTAL TIME: %s seconds ---" % (time.time() - start_time))
-
-    elif choice == "5":
+    elif choice == "2":
         veureavisos()
     elif choice == "6":
         extreurecatalegCSV()
-
+    elif choice == "9":
+        esborrarAntics()
     elif choice == "888":
         import subprocess
         subprocess.run(["python", "runspiders.py", "jugamosunacataleg"])
