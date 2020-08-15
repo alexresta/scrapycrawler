@@ -6,7 +6,7 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.loader.processors import TakeFirst,Compose
+from itemloaders.processors import TakeFirst,Compose
 from datetime import date
 
 from w3lib.html import remove_tags
