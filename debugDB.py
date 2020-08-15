@@ -288,9 +288,9 @@ def esborrarAntics():
 
 
 
-
+	
 def mainmenu():
-	os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
     print(Style.RESET_ALL)
     
