@@ -47,7 +47,7 @@ class JuguetestodayCataleg(scrapy.Spider):
             if hidden is None:
                 loader = ItemLoader(item=Producte(), selector=producteRAW)
                 loader.add_css('nom', 'div.product-description h3.product-title > a::text')
-                loader.add_css('url', 'div.product-description h3.roduct-title > a::attr(href)')
+                loader.add_css('url', 'div.product-description h3.product-title > a::attr(href)')
                 loader.add_css('preu', 'div.product-price-and-shipping span.price::text')
                 loader.add_css('preu_original', 'div.product-price-and-shipping span.regular-price::text')
 
