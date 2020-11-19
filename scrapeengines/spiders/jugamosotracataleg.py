@@ -1,13 +1,8 @@
 import scrapy
 from scrapeengines.items import Producte
 from scrapy.loader import ItemLoader
-from tinydb import TinyDB, Query
-from datetime import date
 from scrapy.crawler import CrawlerProcess
-from tinydb.storages import JSONStorage
-from tinydb.middlewares import CachingMiddleware
 from scrapy.utils.project import get_project_settings
-import logging
 
 
 class JugamosotraCataleg(scrapy.Spider):

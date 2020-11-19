@@ -1,5 +1,4 @@
 import pymongo
-from tinydb import TinyDB, Query
 from datetime import date
 import sys
 import os
@@ -15,7 +14,6 @@ from scrapeengines.pipelines import MongoDB
 import scrapeengines.settings
 
 
-dbofertes = TinyDB('db.json')
 
 NEW_LINE = "\n"
 
@@ -259,9 +257,6 @@ def deleteDBAvisos():
 
         print("esborrat!")
         mongoclient.close()
-
-
-
 
 def esborrarAntics():
 
