@@ -22,3 +22,6 @@
 
 //antics
  {date_lastseen : {$lt: "2020-07-01"}  }
+
+
+{ $and: [{tipus_notificacio : "ESGOTAT"}, {botiga : "Dracotienda"}]}

@@ -18,10 +18,15 @@ class JuguetestodayCataleg(scrapy.Spider):
     def start_requests(self):
 
         urls = [
+            'https://juguetestoday.com/15-juegos-de-mesa?page=20',
             'https://juguetestoday.com/15-juegos-de-mesa?page=15',
             'https://juguetestoday.com/15-juegos-de-mesa?page=10',
             'https://juguetestoday.com/15-juegos-de-mesa?page=5',
-            'https://juguetestoday.com/15-juegos-de-mesa'
+            'https://juguetestoday.com/15-juegos-de-mesa',
+            'https://juguetestoday.com/17-juegos-de-moda',
+            'https://juguetestoday.com/128-juegos-de-cartas',
+            'https://juguetestoday.com/12813-juegos-mesa-para-dos',
+            'https://juguetestoday.com/11957-oferta-juegos-de-mesa'
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -39,8 +44,8 @@ class JuguetestodayCataleg(scrapy.Spider):
             hidden = producteRAW.css('a.delete').get()
             if hidden is None:
                 loader = ItemLoader(item=Producte(), selector=producteRAW)
-                loader.add_css('nom', 'div.product-description h1.product-title > a::text')
-                loader.add_css('url', 'div.product-description h1.product-title > a::attr(href)')
+                loader.add_css('nom', 'h2.product-title > a::text')
+                loader.add_css('url', 'h2.product-title > a::attr(href)')
                 loader.add_css('preu', 'div.product-price-and-shipping span.price::text')
                 loader.add_css('preu_original', 'div.product-price-and-shipping span.regular-price::text')
 

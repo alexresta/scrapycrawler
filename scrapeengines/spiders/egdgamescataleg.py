@@ -17,6 +17,8 @@ class EgdgamesCataleg(scrapy.Spider):
     def start_requests(self):
 
         urls = [
+            'https://www.egdgames.com/comprar/black-friday',
+            'https://www.egdgames.com/comprar/juegos-de-mesa/page/120/',
             'https://www.egdgames.com/comprar/juegos-de-mesa/page/100/',
             'https://www.egdgames.com/comprar/juegos-de-mesa/page/80/',
             'https://www.egdgames.com/comprar/juegos-de-mesa/page/60/',
@@ -44,9 +46,9 @@ class EgdgamesCataleg(scrapy.Spider):
             
             loader.add_css('nom', 'p.product-title a::text')
             loader.add_css('url', 'p.product-title a::attr(href)')
-            loader.add_css('preu', 'span.price ins span.amount::text')
-            loader.add_css('preu', 'span.price > span.amount::text')
-            loader.add_css('preu_original', 'span.price del span.amount::text')
+            loader.add_css('preu', 'span.price ins span.amount bdi::text')
+            loader.add_css('preu', 'span.price span.amount bdi::text')
+            loader.add_css('preu_original', 'span.price del span.amount bdi::text')
 
             textstock = producteRAW.css('p.stock::text').get()
             if textstock == "Disponible":
