@@ -14,7 +14,7 @@ from scrapeengines.spiders.jugamosunacataleg import JugamosunaCataleg
 from scrapeengines.spiders.outletpccataleg import OutletpcCataleg
 from scrapeengines.spiders.zacatruscataleg import ZacatrusCataleg
 from scrapeengines.spiders.juguetestoday import JuguetestodayCataleg
-
+from scrapeengines.spiders.atlanticacataleg import AtlanticaCataleg
 
 def mathomofertes():
     process = CrawlerProcess(settings={
@@ -80,6 +80,12 @@ def ecifullcatalog():
     process.crawl(EciCataleg)
     process.start()  # the script will block here until the crawling is finished
 
+def atlanticafullcatalog():
+
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(AtlanticaCataleg)
+    process.start()  # the script will block here until the crawling is finished
+
 
 def allparallel():
     process = CrawlerProcess(get_project_settings())
@@ -92,6 +98,8 @@ def allparallel():
     process.crawl(OutletpcCataleg)
     process.crawl(JuguetestodayCataleg)
     process.crawl(EciCataleg)
+    process.crawl(AtlanticaCataleg)
+
 
     process.start()
 
@@ -114,6 +122,8 @@ if __name__ == "__main__":
         juguetestodayfullcatalog()
     elif sys.argv[1] == 'ecicataleg':
         ecifullcatalog()
+    elif sys.argv[1] == 'atlanticacataleg':
+        atlanticafullcatalog()
     elif sys.argv[1] == 'allparallel':
         allparallel()
     else:
